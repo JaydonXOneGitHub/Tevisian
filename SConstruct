@@ -66,6 +66,7 @@ env.Append(CXXFLAGS=compiler_flags)
 
 sources = Glob("code/src/core/*.cpp")
 sources += Glob("code/src/plugin/*.cpp")
+sources += Glob("code/src/resource/*.cpp")
 
 sources.append("code/main.cpp")
 

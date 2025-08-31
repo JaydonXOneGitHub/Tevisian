@@ -1,8 +1,9 @@
 #include "resource/texture_resource.h"
+#include "SFML/Graphics.hpp"
 
 using namespace tev::resource;
 
-TextureResource::TextureResource(const std::string& path)
+TextureResource::TextureResource(const std::string& path) : Resource(path)
 {
 	this->texture = new sf::Texture();
 
@@ -21,7 +22,7 @@ TextureResource::TextureResource(const std::string& path)
 
 		sf::Image img = this->texture->copyToImage();
 
-		const sf::Uint8* pixels = img.getPixelsPtr();
+		const uint8_t* pixels = img.getPixelsPtr();
 
 		size_t size = this->width * this->height * 4; // RGBA
 

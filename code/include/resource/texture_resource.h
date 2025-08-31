@@ -15,6 +15,7 @@ namespace tev
 
 			int get_width() const;
 			int get_height() const;
+
 			const unsigned char* get_data() const;
 
 			sf::Texture* get_texture() const;

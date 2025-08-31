@@ -3,12 +3,20 @@
 #include "plugin/plugin.h"
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
-#include "plugin/theatre_renderer.h"
+#include "resource/texture_resource.h"
+#include <memory>
+
 
 namespace tev
 {
 	namespace plugin
 	{
+
+
+
+		class TheatreUI;
+		class TheatreRenderer;
+
 
 
 
@@ -32,6 +40,25 @@ namespace tev
 			sf::RenderWindow* get_window() const;
 
 			TheatreRenderer* get_renderer() const;
+
+			tev::core::ErrorCode initialize() override;
+		};
+
+
+
+
+		class TheatreRenderer
+		{
+		private:
+			TheatreUI* tui;
+			std::weak_ptr<resource::TextureResource> display_texture;
+
+		public:
+			void set_ui(TheatreUI* tui);
+
+			void initialize();
+
+			void draw();
 		};
 
 

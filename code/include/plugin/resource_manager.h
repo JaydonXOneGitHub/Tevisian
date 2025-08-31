@@ -47,10 +47,10 @@ std::weak_ptr<T> tev::plugin::ResourceManager::load(const std::string& path)
 
 	if (it != this->resources->end())
 	{
-		return dynamic_cast<T*>(it->second);
+		return std::dynamic_pointer_cast<T>(it->second);
 	}
 
-	std::unique_ptr<T> t = std::make_shared<T>(path);
+	std::shared_ptr<T> t = std::make_shared<T>(path);
 
 	this->resources->insert({ path, t });
 

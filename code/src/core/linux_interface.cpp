@@ -7,7 +7,7 @@
 
 
 static void* x11_handle = nullptr;
-static void* termial_handle = nullptr;
+static void* terminal_handle = nullptr;
 
 
 

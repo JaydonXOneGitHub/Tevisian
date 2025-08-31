@@ -1,8 +1,9 @@
-#include "plugin/theatre_renderer.h"
 #include "plugin/resource_manager.h"
 #include "core/tevisian.h"
 #include "resource/texture_resource.h"
 #include "plugin/theatre_ui.h"
+#include "core/plugin_names.h"
+#include <iostream>
 
 
 
@@ -10,56 +11,64 @@ using namespace tev::plugin;
 
 
 
-TheatreRenderer::TheatreRenderer(TheaterUI* tui)
+
+void TheatreRenderer::set_ui(TheatreUI* tui)
 {
-	this->render_texture = new sf::RenderTexture(
-		sf::Vector2u(2560, 1440),
-		sf::ContextSettings()
+	this->tui = tui;
+
+	this->tui->get_window()->setView(
+		sf::View(
+			sf::FloatRect(
+				sf::Vector2f(0, 0),
+				sf::Vector2f(2560, 1440)
+			)
+		)
 	);
 
-	this->tui = tui;
-}
+#ifndef LINUX
+	this->tui->get_window()->setFramerateLimit(9000);
 
-TheatreRenderer::~TheatreRenderer()
-{
-	delete this->render_texture;
-}
-
-sf::RenderTexture* TheatreRenderer::get_render_texture() const
-{
-	return this->render_texture;
-}
-
-void TheatreRenderer::finish_preparing_render_texture()
-{
-	this->render_texture->setSmooth(false);
-	this->render_texture->setRepeated(false);
-	this->render_texture->clear(sf::Color(0, 0, 0, 255));
-	this->render_texture->display();
+	this->tui->get_window()->setSize(sf::Vector2u(640, 480));
+#endif
 }
 
 void TheatreRenderer::initialize()
 {
-	this->finish_preparing_render_texture();
-
 	tev::plugin::ResourceManager* rm = static_cast<tev::plugin::ResourceManager*>(
-		t->get_plugin(tev::default_names::RESMAN)
-		);
+		tev::core::Tevisian::get_singleton()->get_plugin(tev::default_names::RESMAN)
+	);
 
 	if (rm)
 	{
 		this->display_texture = rm->load<tev::resource::TextureResource>(
-			"assets/images/tevisianlogo.png"
+			"assets/images/scaletest.png"
 		);
 	}
 }
 
 void TheatreRenderer::draw()
 {
-	this->render_texture->clear(sf::Color(0, 0, 0, 255));
 	if (this->display_texture.expired())
 	{
+		std::cout << "WARNING: display texture expired!\n";
 		return;
 	}
-	this->render_texture->display();
+
+	std::shared_ptr<tev::resource::TextureResource> tex = this->display_texture.lock();
+
+	if (!tex)
+	{
+		std::cout << "WARNING: display texture is null!\n";
+		return;
+	}
+
+	sf::Sprite sprite = sf::Sprite(*(tex.get()->get_texture()));
+
+	sprite.setPosition(
+		sf::Vector2f(0, 0)
+	);
+
+	sprite.setScale(sf::Vector2f(1, 1));
+
+	this->tui->get_window()->draw(sprite);
 }
