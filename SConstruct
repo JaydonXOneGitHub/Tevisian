@@ -69,6 +69,6 @@ sources += Glob("code/src/plugin/*.cpp")
 
 sources.append("code/main.cpp")
 
-target: str = "bin/Tevisian"
+target: str = "build/Tevisian"
 
 env.Program(target=target, source=sources)
