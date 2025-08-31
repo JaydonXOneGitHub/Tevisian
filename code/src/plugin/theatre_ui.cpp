@@ -13,7 +13,7 @@ TheatreUI::TheatreUI()
 		sf::ContextSettings()
 	);
 
-	this->renderer = new TheatreRenderer();
+	this->renderer = new TheatreRenderer(this);
 }
 
 TheatreUI::~TheatreUI() 

@@ -56,7 +56,7 @@ elif os.name == LINUX:
     linker_flags.append(
         '-Wl,'
         '-rpath,'
-        '$ORIGIN/thirdparty/lib/sfml'
+        '$ORIGIN/thirdparty/lib/sfml,'
     )
     env.Append(LIBS=linux_libs)
     defines.append("LINUX")

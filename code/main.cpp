@@ -3,6 +3,8 @@
 #include "plugin/theatre_ui.h"
 #include "plugin/resource_manager.h"
 
+#include "resource/texture_resource.h"
+
 #include "core/plugin_names.h"
 #include <iostream>
 
@@ -13,7 +15,7 @@ using namespace tev::core;
 
 
 
-static void register_plugins(Tevisian* t)
+static void register_plugins(tev::core::Tevisian* t)
 {
     t->register_plugin(new tev::plugin::TheatreUI());
     t->register_plugin(new tev::plugin::ResourceManager());
@@ -22,9 +24,9 @@ static void register_plugins(Tevisian* t)
 
 int main(int argc, char** argv)
 {
-    Tevisian::set_singleton(new Tevisian());
+    tev::core::Tevisian::set_singleton(new tev::core::Tevisian());
 
-    Tevisian* t = Tevisian::get_singleton();
+    tev::core::Tevisian* t = tev::core::Tevisian::get_singleton();
 
     register_plugins(t);
 
@@ -36,5 +38,5 @@ int main(int argc, char** argv)
         t->draw();
     }
 
-    return Tevisian::terminate();
+    return tev::core::Tevisian::terminate();
 }
