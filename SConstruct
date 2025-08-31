@@ -41,10 +41,10 @@ compiler_flags: list[str] = []
 
 linker_flags: list[str] = []
 
+defines: list[str] = []
+
 env.Append(CPPPATH=include_dirs)
 env.Append(LIBPATH=lib_paths)
-
-env.Append(CXXFLAGS=compiler_flags)
 env.Append(LINKFLAGS=linker_flags)
 
 if os.name == WIN:
@@ -53,8 +53,16 @@ if os.name == WIN:
 
 elif os.name == LINUX:
     compiler_flags.append('-std=c++17')
-    linker_flags.append('-Wl,-rpath,$ORIGIN/thirdparty/lib')
+    linker_flags.append(
+        '-Wl,'
+        '-rpath,'
+        '$ORIGIN/thirdparty/lib/sfml'
+    )
     env.Append(LIBS=linux_libs)
+    defines.append("LINUX")
+
+env.Append(CPPDEFINES=defines)
+env.Append(CXXFLAGS=compiler_flags)
 
 sources = Glob("code/src/core/*.cpp")
 sources += Glob("code/src/plugin/*.cpp")
