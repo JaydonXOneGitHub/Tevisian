@@ -1,0 +1,15 @@
+cp thirdparty/lib/sfml/libsfml-audio.so ../../../../usr/lib/libsfml-audio.so
+cp thirdparty/lib/sfml/libsfml-audio.so.3.0 ../../../../usr/lib/libsfml-audio.so.3.0
+cp thirdparty/lib/sfml/libsfml-audio.so.3.0.0 ../../../../usr/lib/libsfml-audio.so.3.0.0
+cp thirdparty/lib/sfml/libsfml-graphics.so ../../../../usr/lib/libsfml-graphics.so
+cp thirdparty/lib/sfml/libsfml-graphics.so.3.0 ../../../../usr/lib/libsfml-graphics.so.3.0
+cp thirdparty/lib/sfml/libsfml-graphics.so.3.0.0 ../../../../usr/lib/libsfml-graphics.so.3.0.0
+cp thirdparty/lib/sfml/libsfml-network.so ../../../../usr/lib/libsfml-network.so
+cp thirdparty/lib/sfml/libsfml-network.so.3.0 ../../../../usr/lib/libsfml-network.so.3.0
+cp thirdparty/lib/sfml/libsfml-network.so.3.0.0 ../../../../usr/lib/libsfml-network.so.3.0.0
+cp thirdparty/lib/sfml/libsfml-system.so ../../../../usr/lib/libsfml-system.so
+cp thirdparty/lib/sfml/libsfml-system.so.3.0 ../../../../usr/lib/libsfml-system.so.3.0
+cp thirdparty/lib/sfml/libsfml-system.so.3.0.0 ../../../../usr/lib/libsfml-system.so.3.0.0
+cp thirdparty/lib/sfml/libsfml-window.so ../../../../usr/lib/libsfml-window.so
+cp thirdparty/lib/sfml/libsfml-window.so.3.0 ../../../../usr/lib/libsfml-window.so.3.0
+cp thirdparty/lib/sfml/libsfml-window.so.3.0.0 ../../../../usr/lib/libsfml-window.so.3.0.0
