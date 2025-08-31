@@ -1,5 +1,6 @@
 #include "resource/texture_resource.h"
 #include "SFML/Graphics.hpp"
+#include <cstring>
 
 using namespace tev::resource;
 
