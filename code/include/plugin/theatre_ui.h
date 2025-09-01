@@ -5,6 +5,8 @@
 #include "SFML/Window.hpp"
 #include "resource/texture_resource.h"
 #include <memory>
+#include "ui/ui_tree.h"
+#include <functional>
 
 
 namespace tev
@@ -24,9 +26,28 @@ namespace tev
 
 		class TheatreUI : public Plugin
 		{
+		public:
+			enum class Commands
+			{
+				Left,
+				Right,
+				Up,
+				Down,
+				Select,
+				Back,
+				Submenu,
+				Home
+			};
+
 		private:
 			sf::RenderWindow* window;
 			TheatreRenderer* renderer;
+			tev::ui::UITree* ui_tree;
+
+			std::function<void(const Commands&)> command_listener;
+
+		private:
+			void try_send_signal(const Commands& command);
 
 		public:
 			TheatreUI();
@@ -41,7 +62,12 @@ namespace tev
 
 			TheatreRenderer* get_renderer() const;
 
+			tev::ui::UITree* get_ui_tree() const;
+
 			tev::core::ErrorCode initialize() override;
+
+			void add_command_listener(const std::function<void(const Commands&)>& listener);
+			
 		};
 
 

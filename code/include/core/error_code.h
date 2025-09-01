@@ -7,7 +7,7 @@ namespace tev
 
 
 
-        enum ErrorCode : long long
+        enum class ErrorCode : long long
         {
             OK = 0,
             PLUGIN_NOT_ESTABLISHED = -100,

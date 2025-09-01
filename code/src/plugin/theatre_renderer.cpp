@@ -34,7 +34,7 @@ void TheatreRenderer::set_ui(TheatreUI* tui)
 
 void TheatreRenderer::initialize()
 {
-	tev::plugin::ResourceManager* rm = static_cast<tev::plugin::ResourceManager*>(
+	/*tev::plugin::ResourceManager* rm = static_cast<tev::plugin::ResourceManager*>(
 		tev::core::Tevisian::get_singleton()->get_plugin(tev::default_names::RESMAN)
 	);
 
@@ -43,12 +43,12 @@ void TheatreRenderer::initialize()
 		this->display_texture = rm->load<tev::resource::TextureResource>(
 			"assets/images/scaletest.png"
 		);
-	}
+	}*/
 }
 
 void TheatreRenderer::draw()
 {
-	if (this->display_texture.expired())
+	/*if (this->display_texture.expired())
 	{
 		std::cout << "WARNING: display texture expired!\n";
 		return;
@@ -70,5 +70,5 @@ void TheatreRenderer::draw()
 
 	sprite.setScale(sf::Vector2f(1, 1));
 
-	this->tui->get_window()->draw(sprite);
+	this->tui->get_window()->draw(sprite);*/
 }

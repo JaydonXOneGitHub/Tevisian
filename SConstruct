@@ -12,7 +12,8 @@ include_dirs: list[str] = [
 ]
 
 lib_paths: list[str] = [
-    "thirdparty/lib/sfml"
+    "thirdparty/lib/sfml",
+    "thirdparty/lib/sdl"
 ]
 
 win_libs: list[str] = [
@@ -26,7 +27,8 @@ win_libs: list[str] = [
     "sfml-window",
     "vorbis",
     "vorbisenc",
-    "vorbisfile"
+    "vorbisfile",
+    "SDL2"
 ]
 
 linux_libs: list[str] = [
@@ -49,6 +51,7 @@ env.Append(LINKFLAGS=linker_flags)
 
 if os.name == WIN:
     compiler_flags.append('/std:c++17')
+    compiler_flags.append('/EHsc')
     env.Append(LIBS=win_libs)
 
 elif os.name == LINUX:
@@ -67,6 +70,7 @@ env.Append(CXXFLAGS=compiler_flags)
 sources = Glob("code/src/core/*.cpp")
 sources += Glob("code/src/plugin/*.cpp")
 sources += Glob("code/src/resource/*.cpp")
+sources += Glob("code/src/ui/*.cpp")
 
 sources.append("code/main.cpp")
 
