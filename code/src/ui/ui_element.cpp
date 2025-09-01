@@ -1,4 +1,5 @@
 #include "ui/ui_tree.h"
+#include <algorithm>
 
 using namespace tev::ui;
 
