@@ -24,8 +24,11 @@ public sealed partial class Tevisian : Game
             throw new System.Exception("Tevisian instance already made!");
         }
 
+#if LINUX
+#else
         Window.AllowAltF4 = false;
         Window.AllowUserResizing = true;
+#endif
     }
 
     protected override void Initialize()
@@ -40,6 +43,12 @@ public sealed partial class Tevisian : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         serviceManager.Initialize();
+
+#if LINUX
+        // Add Linux fullscreen code
+
+
+#endif
 
         // TODO: use this.Content to load your game content here
     }
