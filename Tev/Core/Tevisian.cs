@@ -13,6 +13,8 @@ public sealed partial class Tevisian : Game
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
 
+        Window.Title = "Tevisian";
+
         serviceManager = new ServiceManager();
 
         if (instance == null)
@@ -24,9 +26,10 @@ public sealed partial class Tevisian : Game
             throw new System.Exception("Tevisian instance already made!");
         }
 
+        Window.AllowAltF4 = false;
+
 #if LINUX
 #else
-        Window.AllowAltF4 = false;
         Window.AllowUserResizing = true;
 #endif
     }
@@ -46,19 +49,22 @@ public sealed partial class Tevisian : Game
 
 #if LINUX
         // Add Linux fullscreen code
-
+        _graphics.PreferredBackBufferHeight =
+        GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        _graphics.PreferredBackBufferWidth =
+        GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        _graphics.IsFullScreen = true;
+        _graphics.ApplyChanges();
 
 #endif
+
 
         // TODO: use this.Content to load your game content here
     }
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
-
-        // TODO: Add your update logic here
+        serviceManager.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -72,9 +78,7 @@ public sealed partial class Tevisian : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Black);
-
-        // TODO: Add your drawing code here
+        serviceManager.Draw(gameTime);
 
         base.Draw(gameTime);
     }

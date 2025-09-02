@@ -1,2 +1,2 @@
-REM blinux stands for "build for linux"
-dotnet run -c Release -p:DefineConstants="LINUX"
+REM bwindows stands for "build for windows"
+dotnet run -c Release

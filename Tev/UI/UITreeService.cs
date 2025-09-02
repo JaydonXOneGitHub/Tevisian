@@ -44,6 +44,6 @@ public sealed class UITreeService : TevisianService
 
     public override void Update(GameTime gameTime)
     {
-        root.Draw(gameTime);
+        root.Update(gameTime);
     }
 }

@@ -149,13 +149,13 @@ public class UIElement
         {
             addQueue.Clear();
         }
-        
+
         if (removeQueue.Count > 0)
         {
             removeQueue.Clear();
         }
     }
-    
+
     public void DeferredAddChild(UIElement child)
     {
         if (child.parent != null)
@@ -177,4 +177,6 @@ public class UIElement
 
         removeQueue.Add(child);
     }
+
+    public List<UIElement> GetChildren() => children;
 }
