@@ -4,20 +4,23 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using MoonSharp.Interpreter;
 
 namespace Tev.UI;
 
 public class UIElement
 {
+    [MoonSharpHidden]
     public Vector2 Offset { get; set; }
 
     private UIElement parent;
     private readonly UITreeService tree;
 
     private readonly List<UIElement> children;
-    private readonly List<UIElement> addQueue;
-    private readonly List<UIElement> removeQueue;
 
+    private readonly List<Action> doQueue;
+
+    [MoonSharpHidden]
     public Vector2 GlobalOffset { get; private set; }
 
 
@@ -27,8 +30,7 @@ public class UIElement
     public UIElement(UITreeService tree)
     {
         children = [];
-        addQueue = [];
-        removeQueue = [];
+        doQueue = [];
         this.tree = tree;
     }
 
@@ -46,6 +48,10 @@ public class UIElement
 
     }
 
+    [MoonSharpHidden]
+    public List<Action> GetDoQueue() => doQueue;
+
+    [MoonSharpHidden]
     public void Update(GameTime gameTime)
     {
         ProcessQueue();
@@ -67,6 +73,7 @@ public class UIElement
         InternalUpdate(gameTime);
     }
 
+    [MoonSharpHidden]
     public void Draw(GameTime gameTime)
     {
         foreach (var child in children)
@@ -135,25 +142,12 @@ public class UIElement
 
     private void ProcessQueue()
     {
-        foreach (var toRemove in removeQueue)
+        foreach (var action in doQueue)
         {
-            RemoveChild(toRemove);
+            action?.Invoke();
         }
 
-        foreach (var toAdd in addQueue)
-        {
-            AddChild(toAdd);
-        }
-
-        if (addQueue.Count > 0)
-        {
-            addQueue.Clear();
-        }
-
-        if (removeQueue.Count > 0)
-        {
-            removeQueue.Clear();
-        }
+        doQueue.Clear();
     }
 
     public void DeferredAddChild(UIElement child)
@@ -164,7 +158,7 @@ public class UIElement
             return;
         }
 
-        addQueue.Add(child);
+        doQueue.Add(() => AddChild(child));
     }
 
     public void DeferredRemoveChild(UIElement child)
@@ -175,8 +169,9 @@ public class UIElement
             return;
         }
 
-        removeQueue.Add(child);
+        doQueue.Add(() => RemoveChild(child));
     }
 
+    [MoonSharpHidden]
     public List<UIElement> GetChildren() => children;
 }
