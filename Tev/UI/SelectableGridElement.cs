@@ -10,7 +10,7 @@ public sealed class SelectableGridElement : UIElement
 {
     private readonly List<List<SelectableUIElement>> grid = [];
 
-    private Point selectedPos;
+    private Point selectedPos = Point.Zero;
 
     private SelectableUIElement selectedElement;
 
@@ -45,20 +45,57 @@ public sealed class SelectableGridElement : UIElement
         switch (control)
         {
             case NavControl.Left:
-                selectedPos.X = (
-                    (selectedPos.X - 1) %
-                    grid[selectedPos.Y].Count
-                );
-                SelectElement();
+                MoveH(left: true);
                 break;
+
             case NavControl.Right:
-                selectedPos.X = (
-                    (selectedPos.X + 1) %
-                    grid[selectedPos.Y].Count
-                );
-                SelectElement();
+                MoveH(left: false);
+                break;
+
+            case NavControl.Up:
+                MoveV(down: false);
+                break;
+
+            case NavControl.Down:
+                MoveV(down: true);
+                break;
+
+            case NavControl.Select:
+                selectedElement?.OnSelected();
+                break;
+
+            default:
                 break;
         }
+    }
+
+    private void MoveV(bool down)
+    {
+        int i = down ? 1 : -1;
+
+        selectedPos.Y = (
+            (selectedPos.Y + i) %
+            grid.Count
+        );
+
+        if (selectedPos.X > (grid[selectedPos.Y].Count - 1))
+        {
+            selectedPos.X = grid[selectedPos.Y].Count - 1;
+        }
+
+        SelectElement();
+    }
+
+    private void MoveH(bool left)
+    {
+        int i = left ? -1 : 1;
+
+        selectedPos.X = (
+            (selectedPos.X + i) %
+            grid[selectedPos.Y].Count
+        );
+
+        SelectElement();
     }
 
     public void AddRow()
