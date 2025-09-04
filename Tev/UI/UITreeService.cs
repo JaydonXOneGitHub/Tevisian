@@ -23,6 +23,8 @@ public sealed class UITreeService : TevisianService
     public override void Initialize()
     {
         theatre = Tevisian.Get().GetServiceManager().GetService<TheatreRenderer>();
+
+        SceneCreators.CreateHomeScreen(this);
     }
 
     public override void Draw(GameTime gameTime)

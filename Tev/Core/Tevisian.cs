@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Tev.Services;
@@ -88,4 +89,10 @@ public sealed partial class Tevisian : Game
     public ServiceManager GetServiceManager() => serviceManager;
 
     public SpriteBatch GetSpriteBatch() => _spriteBatch;
+
+    public void Reset()
+    {
+        Content.Unload();
+        GC.Collect();
+    }
 }

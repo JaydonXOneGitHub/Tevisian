@@ -15,6 +15,11 @@
     <None Remove="Icon.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="runtimes/linux-arm64/native/libminiaudio.so" />
+    <None Update="runtimes/linux-x64/native/libminiaudio.so" />
+    <None Update="runtimes/win-arm64/native/miniaudio.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Icon.ico">
       <LogicalName>Icon.ico</LogicalName>
     </EmbeddedResource>
@@ -23,9 +28,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+      <Compile Remove="DEPENDANCIES\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.*" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.*" />
     <PackageReference Include="MoonSharp" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="DEPENDANCIES\Miniaudio-CS+\Miniaudio-CS.csproj" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="CollectPackageReferences">
     <Message Text="Restoring dotnet tools (this might take a while depending on your internet speed and should only happen upon building your project for the first time, or after upgrading MonoGame, or clearing your nuget cache)" Importance="High" />

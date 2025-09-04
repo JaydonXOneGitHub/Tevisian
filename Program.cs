@@ -15,6 +15,7 @@ public static class Program
             var sm = tv.GetServiceManager();
 
             sm.Register<InputService>();
+            sm.Register<AudioService>();
             sm.Register<UITreeService>();
             sm.Register<TheatreRenderer>();
             sm.Register<ProcessService>();

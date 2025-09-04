@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using MoonSharp.Interpreter;
+using Tev.Core;
 
 namespace Tev.UI;
 
@@ -16,9 +17,9 @@ public class UIElement
     private UIElement parent;
     private readonly UITreeService tree;
 
-    private readonly List<UIElement> children;
+    private readonly HashSet<UIElement> children;
 
-    private readonly List<Action> doQueue;
+    private readonly HashSet<Action> doQueue;
 
     [MoonSharpHidden]
     public Vector2 GlobalOffset { get; private set; }
@@ -49,7 +50,7 @@ public class UIElement
     }
 
     [MoonSharpHidden]
-    public List<Action> GetDoQueue() => doQueue;
+    public HashSet<Action> GetDoQueue() => doQueue;
 
     [MoonSharpHidden]
     public void Update(GameTime gameTime)
@@ -161,6 +162,9 @@ public class UIElement
         doQueue.Add(() => AddChild(child));
     }
 
+    public void DoDeferred(Action queuedAction)
+        => doQueue.Add(queuedAction);
+
     public void DeferredRemoveChild(UIElement child)
     {
         if (child.parent != this)
@@ -173,5 +177,5 @@ public class UIElement
     }
 
     [MoonSharpHidden]
-    public List<UIElement> GetChildren() => children;
+    public HashSet<UIElement> GetChildren() => children;
 }

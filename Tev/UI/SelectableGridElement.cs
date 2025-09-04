@@ -126,4 +126,12 @@ public sealed class SelectableGridElement : UIElement
         DeferredRemoveChild(grid[row][column]);
         grid[row].RemoveAt(column);
     }
+
+    public Point GetSelectedPos() => selectedPos;
+
+    public SelectableUIElement GetSelectedElement()
+    {
+        // Access selectedElement to avoid unused field warning
+        return selectedElement;
+    }
 }
