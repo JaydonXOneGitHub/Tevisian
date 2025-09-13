@@ -53,8 +53,6 @@ public static class SceneCreators
             int row = 0;
             int col = 0;
 
-            grid.Offset = new(-250, 100);
-
             Point offsetAmount = new(400, 300);
 
             foreach (var pair in apm!)
@@ -107,6 +105,7 @@ public static class SceneCreators
 
             if (grid.GetGrid().Count > 0)
             {
+                grid.Offset = new(-250, 100);
                 grid.Select(0);
             }
             else
@@ -114,8 +113,7 @@ public static class SceneCreators
                 // Select the default element
                 var notice = new TextElement(tree)
                 {
-                    Text = "No apps installed...",
-                    Offset = Vector2.UnitX * offsetAmount.X
+                    Text = "No apps installed..."
                 };
 
                 grid.DeferredAddChild(notice);
