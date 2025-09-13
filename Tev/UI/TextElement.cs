@@ -16,21 +16,20 @@ public sealed class TextElement : UIElement
     public float Scale { get; set; } = 0.25f;
 
     public SpriteEffects Effects = SpriteEffects.None;
-    public float LayerDepth = 0;
 
 
     public TextElement(UITreeService tree) : base(tree)
     {
-        font = Tevisian.Get().Content.Load<SpriteFont>("Fonts/Default");
+        font = Tevisian.Get()!.Content.Load<SpriteFont>("Fonts/Default");
     }
 
     protected override void InternalDraw(GameTime gameTime)
     {
-        Tevisian.Get().GetSpriteBatch().DrawString(
+        Tevisian.Get()!.GetSpriteBatch().DrawString(
             font, Text, GlobalOffset,
             Color, Rotation,
             Vector2.Zero, Scale,
-            Effects, LayerDepth
+            Effects, internalLayerDepth
         );
     }
 }

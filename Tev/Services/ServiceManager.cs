@@ -6,14 +6,14 @@ namespace Tev.Services;
 
 public sealed class ServiceManager
 {
-    private readonly Dictionary<Type, TevisianService> services;
+    private readonly Dictionary<Type, TevisianService?> services;
 
     public ServiceManager()
     {
         services = [];
     }
 
-    public T Register<T>() where T : TevisianService, new()
+    public T? Register<T>() where T : TevisianService, new()
     {
         if (!services.ContainsKey(typeof(T)))
         {
@@ -27,9 +27,9 @@ public sealed class ServiceManager
         return null;
     }
 
-    public T GetService<T>() where T : TevisianService
+    public T? GetService<T>() where T : TevisianService
     {
-        if (services.TryGetValue(typeof(T), out TevisianService tService))
+        if (services.TryGetValue(typeof(T), out TevisianService? tService))
         {
             return tService as T;
         }
@@ -40,7 +40,15 @@ public sealed class ServiceManager
     {
         foreach (var service in services.Values)
         {
-            service.Initialize();
+            service!.Initialize();
+        }
+    }
+
+    public void Reset()
+    {
+        foreach (var service in services.Values)
+        {
+            service!.Reset();
         }
     }
 
@@ -48,7 +56,7 @@ public sealed class ServiceManager
     {
         foreach (var service in services.Values)
         {
-            service.Shutdown();
+            service!.Shutdown();
         }
     }
 
@@ -56,7 +64,7 @@ public sealed class ServiceManager
     {
         foreach (var service in services.Values)
         {
-            service.Draw(gameTime);
+            service!.Draw(gameTime);
         }
     }
 
@@ -64,7 +72,7 @@ public sealed class ServiceManager
     {
         foreach (var service in services.Values)
         {
-            service.Update(gameTime);
+            service!.Update(gameTime);
         }
     }
 }

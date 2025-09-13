@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -29,6 +30,8 @@ public sealed partial class Tevisian : Game
 
         Window.AllowAltF4 = false;
 
+        appManifests = AppRegistrar.Search(AppFolder);
+
 #if LINUX
 #else
         Window.AllowUserResizing = true;
@@ -46,19 +49,18 @@ public sealed partial class Tevisian : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        serviceManager.Initialize();
-
-#if LINUX
         // Add Linux fullscreen code
         _graphics.PreferredBackBufferHeight =
         GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+
         _graphics.PreferredBackBufferWidth =
         GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+
         _graphics.IsFullScreen = true;
+
         _graphics.ApplyChanges();
 
-#endif
-
+        serviceManager.Initialize();
 
         // TODO: use this.Content to load your game content here
     }
@@ -84,11 +86,13 @@ public sealed partial class Tevisian : Game
         base.Draw(gameTime);
     }
 
-    public static Tevisian Get() { return instance; }
+    public static Tevisian? Get() { return instance; }
 
     public ServiceManager GetServiceManager() => serviceManager;
 
-    public SpriteBatch GetSpriteBatch() => _spriteBatch;
+    public SpriteBatch GetSpriteBatch() => _spriteBatch!;
+
+    public Dictionary<string, AppManifest?>? GetAppManifests() => appManifests;
 
     public void Reset()
     {

@@ -5,7 +5,6 @@ namespace Tev.Services;
 public sealed class AudioService : TevisianService
 {
     private readonly MAEngine audioEngine;
-    private readonly MAEngineConfig audioEngineConfig;
 
     public AudioService()
     {

@@ -11,20 +11,34 @@ public sealed class ImageElement : UIElement
 
     public Color Color { get; set; } = Color.White;
 
+    public Vector2 Scale { get; set; }
+
+    public float Rotation { get; set; } = 0;
+
+    public SpriteEffects Effects = SpriteEffects.None;
+
+
+
     public ImageElement(string imgPath, UITreeService tree)
         : base(tree)
     {
-        texture = Tevisian.Get().Content.Load<Texture2D>(imgPath);
+        texture = Tevisian.Get()!.Content.Load<Texture2D>(imgPath);
     }
 
     public Texture2D GetTexture() => texture;
 
     protected override void InternalDraw(GameTime gameTime)
     {
-        Tevisian.Get().GetSpriteBatch().Draw(
-            texture,
-            GlobalOffset,
-            Color
+        Tevisian.Get()!.GetSpriteBatch().Draw(
+            texture: texture,
+            sourceRectangle: null,
+            position: GlobalOffset,
+            scale: Scale,
+            rotation: Rotation,
+            color: Color,
+            origin: Vector2.Zero,
+            effects: Effects,
+            layerDepth: internalLayerDepth
         );
     }
 }

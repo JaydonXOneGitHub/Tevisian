@@ -15,8 +15,8 @@ public sealed class InputService : TevisianService
 
 
 
-    public event Action<Keys> OnKeyPressed;
-    public event Action<Buttons> OnGamePadButtonPressed;
+    public event Action<Keys>? OnKeyPressed;
+    public event Action<Buttons>? OnGamePadButtonPressed;
 
 
 
@@ -40,6 +40,8 @@ public sealed class InputService : TevisianService
         CheckKeyForJustPress(Keys.Up);
         CheckKeyForJustPress(Keys.Enter);
         CheckKeyForJustPress(Keys.Back);
+        CheckKeyForJustPress(Keys.Escape);
+        CheckKeyForJustPress(Keys.Home);
     }
 
     private void CheckKeyForJustPress(Keys key)
@@ -60,6 +62,11 @@ public sealed class InputService : TevisianService
         CheckButtonForJustPress(Buttons.DPadUp);
         CheckButtonForJustPress(Buttons.LeftThumbstickDown);
         CheckButtonForJustPress(Buttons.DPadDown);
+        CheckButtonForJustPress(Buttons.B);
+        CheckButtonForJustPress(Buttons.A);
+        CheckButtonForJustPress(Buttons.Start);
+        CheckButtonForJustPress(Buttons.Back);
+        CheckButtonForJustPress(Buttons.BigButton);
     }
 
     private void CheckButtonForJustPress(Buttons button)

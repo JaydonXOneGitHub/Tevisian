@@ -15,22 +15,23 @@ public enum NavControl
     Select,
     Back,
     Submenu,
+    Home,
 }
 
 public sealed class NavigatorService : TevisianService
 {
-    private InputService inputService;
+    private InputService? inputService;
 
-    public event Action<NavControl> OnNavigationDone;
+    public event Action<NavControl>? OnNavigationDone;
 
     public override void Initialize()
     {
-        inputService = Tevisian.Get()
+        inputService = Tevisian.Get()!
             .GetServiceManager()
             .GetService<InputService>();
 
-        inputService.OnKeyPressed += OnKeyPressed;
-        inputService.OnGamePadButtonPressed += OnButtonPressed;
+        inputService!.OnKeyPressed += OnKeyPressed;
+        inputService!.OnGamePadButtonPressed += OnButtonPressed;
     }
 
     private void OnButtonPressed(Buttons buttons)
@@ -62,6 +63,9 @@ public sealed class NavigatorService : TevisianService
             case Buttons.Start:
                 OnNavigationDone?.Invoke(NavControl.Submenu);
                 break;
+            case Buttons.BigButton:
+                OnNavigationDone?.Invoke(NavControl.Home);
+                break;
             default:
                 break;
         }
@@ -88,6 +92,9 @@ public sealed class NavigatorService : TevisianService
                 break;
             case Keys.Escape:
                 OnNavigationDone?.Invoke(NavControl.Back);
+                break;
+            case Keys.Home:
+                OnNavigationDone?.Invoke(NavControl.Home);
                 break;
             default:
                 break;

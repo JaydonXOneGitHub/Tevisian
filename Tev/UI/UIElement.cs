@@ -14,7 +14,11 @@ public class UIElement
     [MoonSharpHidden]
     public Vector2 Offset { get; set; }
 
-    private UIElement parent;
+    public uint LayerDepth { get; set; } = 0;
+
+    protected float internalLayerDepth = 0;
+
+    private UIElement? parent;
     private readonly UITreeService tree;
 
     private readonly HashSet<UIElement> children;
@@ -24,7 +28,7 @@ public class UIElement
     [MoonSharpHidden]
     public Vector2 GlobalOffset { get; private set; }
 
-
+    public const float LayerDepthDivider = 10000000;
 
 
 
@@ -65,6 +69,8 @@ public class UIElement
         {
             GlobalOffset = Offset;
         }
+
+        internalLayerDepth = ((float)LayerDepth / LayerDepthDivider);
 
         foreach (var child in children)
         {
@@ -116,7 +122,7 @@ public class UIElement
         child.OnRemovedFromTree();
     }
 
-    public UIElement GetParent() => parent;
+    public UIElement? GetParent() => parent;
 
     public UITreeService GetTree() => tree;
 

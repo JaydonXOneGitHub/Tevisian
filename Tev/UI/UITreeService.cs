@@ -9,7 +9,7 @@ public sealed class UITreeService : TevisianService
 {
     private readonly UIElement root;
 
-    private TheatreRenderer theatre;
+    private TheatreRenderer? theatre;
 
     public UITreeService()
     {
@@ -22,18 +22,20 @@ public sealed class UITreeService : TevisianService
 
     public override void Initialize()
     {
-        theatre = Tevisian.Get().GetServiceManager().GetService<TheatreRenderer>();
+        theatre = Tevisian.Get()!.GetServiceManager().GetService<TheatreRenderer>();
 
         SceneCreators.CreateHomeScreen(this);
     }
 
     public override void Draw(GameTime gameTime)
     {
-        var batch = Tevisian.Get().GetSpriteBatch();
+        var batch = Tevisian.Get()!.GetSpriteBatch();
 
-        Tevisian.Get().GraphicsDevice.SetRenderTarget(
-            theatre.GetRenderTarget()
+        Tevisian.Get()!.GraphicsDevice.SetRenderTarget(
+            theatre!.GetRenderTarget()
         );
+
+        Tevisian.Get()!.GraphicsDevice.Clear(Color.Black);
 
         batch.Begin(sortMode: SpriteSortMode.FrontToBack);
 
@@ -41,7 +43,7 @@ public sealed class UITreeService : TevisianService
 
         batch.End();
 
-        Tevisian.Get().GraphicsDevice.SetRenderTarget(null);
+        Tevisian.Get()!.GraphicsDevice.SetRenderTarget(null);
     }
 
     public override void Update(GameTime gameTime)

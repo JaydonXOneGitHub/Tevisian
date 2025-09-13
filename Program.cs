@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using MoonSharp.Interpreter;
 using MoonSharp.Interpreter.Serialization;
 using Tev.Core;
@@ -10,6 +11,8 @@ public static class Program
 {
     public static void Main()
     {
+        Console.WriteLine("Starting Tevisian...");
+
         using (var tv = new Tevisian())
         {
             var sm = tv.GetServiceManager();
@@ -24,5 +27,7 @@ public static class Program
             
             tv.Run();
         }
+
+        Console.WriteLine("Exiting Tevisian...");
     }
 }

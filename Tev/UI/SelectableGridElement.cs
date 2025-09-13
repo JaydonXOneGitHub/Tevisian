@@ -8,40 +8,67 @@ namespace Tev.UI;
 
 public sealed class SelectableGridElement : UIElement
 {
-    private readonly List<List<SelectableUIElement>> grid = [];
+    private readonly List<SelectableUIElement?> grid;
+    private readonly int rowCount;
+    private readonly int iconCount;
 
-    private Point selectedPos = Point.Zero;
+    private int selectedIndex;
 
-    private SelectableUIElement selectedElement;
+    private SelectableUIElement? selectedElement;
 
-    private readonly NavigatorService navigator;
+    private readonly NavigatorService? navigator;
 
-    public SelectableGridElement(UITreeService tree) : base(tree)
+    public SelectableGridElement(
+        UITreeService tree,
+        int rowCount,
+        int iconCount
+    ) : base(tree)
     {
-        navigator = Tevisian.Get().GetServiceManager().GetService<NavigatorService>();
+        grid = [];
+
+        this.rowCount = rowCount;
+        this.iconCount = iconCount;
+
+        navigator = Tevisian.Get()!
+            .GetServiceManager()
+            .GetService<NavigatorService>();
     }
 
     public override void OnAddedToTree()
     {
-        navigator.OnNavigationDone += OnNavigationDone;
+        navigator!.OnNavigationDone += OnNavigationDone;
     }
 
     public override void OnRemovedFromTree()
     {
-        navigator.OnNavigationDone -= OnNavigationDone;
+        navigator!.OnNavigationDone -= OnNavigationDone;
+    }
+
+    public void Select(int selectedIndex)
+    {
+        this.selectedIndex = selectedIndex;
+
+        SelectElement();
     }
 
     private void SelectElement()
     {
+        Console.WriteLine(selectedIndex.ToString());
+        
         selectedElement?.OnNotHovered();
 
-        selectedElement = grid[selectedPos.Y][selectedPos.X];
+        selectedElement = grid[selectedIndex];
 
         selectedElement?.OnHovered();
     }
 
     private void OnNavigationDone(NavControl control)
     {
+        if (!(Tevisian.Get()!.IsActive))
+        {
+            return;
+        }
+        
         switch (control)
         {
             case NavControl.Left:
@@ -71,17 +98,29 @@ public sealed class SelectableGridElement : UIElement
 
     private void MoveV(bool down)
     {
-        int i = down ? 1 : -1;
+        int temp = selectedIndex;
 
-        selectedPos.Y = (
-            (selectedPos.Y + i) %
-            grid.Count
-        );
+        int i = down ? Tevisian.MaxColumns : -Tevisian.MaxColumns;
 
-        if (selectedPos.X > (grid[selectedPos.Y].Count - 1))
+        selectedIndex += i;
+
+        if (!down && selectedIndex < 0)
         {
-            selectedPos.X = grid[selectedPos.Y].Count - 1;
+            selectedIndex = temp;
+            return;
         }
+
+        if (down && selectedIndex >= grid.Count)
+        {
+            selectedIndex = temp;
+            return;
+        }
+
+        selectedIndex = Math.Clamp(
+            selectedIndex,
+            0,
+            grid.Count - 1
+        );
 
         SelectElement();
     }
@@ -90,46 +129,36 @@ public sealed class SelectableGridElement : UIElement
     {
         int i = left ? -1 : 1;
 
-        selectedPos.X = (
-            (selectedPos.X + i) %
-            grid[selectedPos.Y].Count
+        selectedIndex += i;
+
+        selectedIndex = Math.Clamp(
+            selectedIndex,
+            0,
+            grid.Count - 1
         );
 
         SelectElement();
     }
 
-    public void AddRow()
+    public void AddSelectable(SelectableUIElement sui)
     {
-        grid.Add([]);
-    }
-
-    public void RemoveRow()
-    {
-        grid.RemoveAt(grid.Count - 1);
-    }
-
-    public List<SelectableUIElement> GetRow(int row)
-    {
-        return grid[row];
-    }
-
-    public void AddSelectable(
-        SelectableUIElement sui,
-        int row)
-    {
-        grid[row].Add(sui);
+        grid.Add(sui);
         DeferredAddChild(sui);
+
+        Console.WriteLine(grid.Count);
     }
 
-    public void RemoveSelectable(int row, int column)
+    public void RemoveSelectable(int selectedIndex)
     {
-        DeferredRemoveChild(grid[row][column]);
-        grid[row].RemoveAt(column);
+        DeferredRemoveChild(grid[selectedIndex]!);
+        grid.RemoveAt(selectedIndex);
     }
 
-    public Point GetSelectedPos() => selectedPos;
+    public int GetSelectedIndex() => selectedIndex;
 
-    public SelectableUIElement GetSelectedElement()
+    public List<SelectableUIElement?> GetGrid() => grid;
+
+    public SelectableUIElement? GetSelectedElement()
     {
         // Access selectedElement to avoid unused field warning
         return selectedElement;
