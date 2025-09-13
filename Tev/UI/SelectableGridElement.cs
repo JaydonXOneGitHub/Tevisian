@@ -68,6 +68,11 @@ public sealed class SelectableGridElement : UIElement
         {
             return;
         }
+
+        if (grid.Count == 0)
+        {
+            return;
+        }
         
         switch (control)
         {

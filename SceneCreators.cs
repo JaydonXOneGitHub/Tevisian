@@ -107,14 +107,18 @@ public static class SceneCreators
 
             if (grid.GetGrid().Count > 0)
             {
+                grid.Select(0);
+            }
+            else
+            {
                 // Select the default element
                 var notice = new TextElement(tree);
 
                 notice.Text = "No apps installed...";
-                
+
                 notice.Offset = offsetAmount.ToVector2();
 
-                grid.Select(0);
+                grid.DeferredAddChild(notice);
             }
         }
     }
