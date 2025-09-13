@@ -35,7 +35,7 @@ public sealed class UITreeService : TevisianService
             theatre!.GetRenderTarget()
         );
 
-        Tevisian.Get()!.GraphicsDevice.Clear(Color.Black);
+        Tevisian.Get()!.GraphicsDevice.Clear(Color.Gray);
 
         batch.Begin(sortMode: SpriteSortMode.FrontToBack);
 
