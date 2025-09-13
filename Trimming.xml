@@ -1,0 +1,12 @@
+<!--<Directives>
+    <Application>
+        <Assembly Name="MoonSharp.Interpreter" Dynamic="Required All"/>
+    </Application>
+</Directives>-->
+<linker>
+  <assembly fullname="MonoGame.Framework">
+    <type fullname="Microsoft.Xna.Framework.Content.ContentTypeReader" dynamic="required all"/>
+    <type fullname="Microsoft.Xna.Framework.Content.ContentTypeReader`1" dynamic="required all"/>
+    <!-- add custom readers here -->
+  </assembly>
+</linker>

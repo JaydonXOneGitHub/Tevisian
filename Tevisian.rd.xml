@@ -1,5 +1,0 @@
-<Directives>
-    <Application>
-        <Assembly Name="MoonSharp.Interpreter" Dynamic="Required All"/>
-    </Application>
-</Directives>

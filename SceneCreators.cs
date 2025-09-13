@@ -112,11 +112,11 @@ public static class SceneCreators
             else
             {
                 // Select the default element
-                var notice = new TextElement(tree);
-
-                notice.Text = "No apps installed...";
-
-                notice.Offset = offsetAmount.ToVector2();
+                var notice = new TextElement(tree)
+                {
+                    Text = "No apps installed...",
+                    Offset = Vector2.UnitX * offsetAmount.X
+                };
 
                 grid.DeferredAddChild(notice);
             }
